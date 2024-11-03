@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta charset="UTF-8">
+  
+  <title>abc editor 2</title>
+  
+  <link rel="stylesheet" href="./_css/abcjs-audio.css">
+  
+  <script src="./_js/abcjs-basic.js"></script>
+  <script type="text/javascript">
+    var abcjsEditor;
+
+    window.onload = function () {
+      var urlParams = new URLSearchParams(window.location.search);
+      var path = urlParams.get('path');
+
+      if (path) {
+        loadFile(path, function (content) {
+          var textarea = document.getElementById("abc");
+          textarea.value = content;
+          initializeEditor();
+        });
+      } else {
+        initializeEditor();
+      }
+    };
+
+    function loadFile(path, callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          callback(xhr.responseText);
+        }
+      };
+      xhr.open('GET', path, true);
+      xhr.send();
+    }
+
+    function initializeEditor() {
+      abcjsEditor = new ABCJS.Editor("abc", {
+        canvas_id: "paper",
+        warnings_id: "warnings",
+        synth: {
+          el: "#audio",
+          options: { displayLoop: true, displayRestart: true, displayPlay: true, displayProgress: true, displayWarp: true }
+        },
+        abcjsParams: {
+          add_classes: true,
+          clickListener: clickListener
+        },
+        selectionChangeCallback: selectionChangeCallback
+      });
+
+      document.getElementById("midi").addEventListener("click", downloadMidi);
+
+      // Get the generated SVG element
+      var svgElement = document.querySelector("#paper svg");
+
+      // Set the page width based on the SVG width
+      document.body.style.width = svgElement.getAttribute("width") + "px";
+    }
+
+    function clickListener(abcElem, tuneNumber, classes, analysis, drag, mouseEvent) {
+      var lastClicked = abcElem.midiPitches;
+      if (!lastClicked)
+        return;
+
+      ABCJS.synth.playEvent(lastClicked, abcElem.midiGraceNotePitches, abcjsEditor.millisecondsPerMeasure()).then(function (response) {
+        console.log("note played");
+      }).catch(function (error) {
+        console.log("error playing note", error);
+      });
+    }
+
+    function selectionChangeCallback(start, end) {
+      if (abcjsEditor) {
+        var el = abcjsEditor.tunes[0].getElementFromChar(start);
+        console.log(el);
+      }
+    }
+
+    function downloadMidi() {
+      var abc = document.getElementById("abc").value;
+      var a = document.getElementById("midi-download");
+      var midi = ABCJS.synth.getMidiFile(abc, { midiOutputType: "encoded" })
+      a.setAttribute("href", midi)
+      a.click();
+    }
+  </script>
+
+</head>
+<body>
+  <div id="paper"></div>
+  <div id="audio"></div>
+  <br>
+  <button id="midi">Download MIDI</button>
+  <a id="midi-download" download="example.mid"></a>
+  <hr>
+  <textarea id="abc" cols="80" rows="15" spellcheck="false"></textarea>
+  <div id="warnings"></div>
+</body>
+</html>

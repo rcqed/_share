@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    
+    <title>Markmap</title>
+    <style>
+      svg.markmap {
+        width: 100%;
+        height: 95vh;
+      }
+    </style>
+
+    <script src="./_js/markmap-autoloader.js"></script>
+    
+  </head>
+  <body>
+    <div class="markmap" id="maprender"></div>
+
+    <script>
+      //从url获取md文件地址，格式为www.md.com/index.html?md=/source/README.md
+      let searchParams = new URLSearchParams(window.location.search);
+      let mdurl = searchParams.get("md");
+
+      //从md中获取内容并替换<div>中的内容
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", mdurl);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+		// 添加<script type="text/template">前后缀
+          let content = "<script type=\"text/template\">\n---\nmarkmap:\nmaxWidth: 300\ncolorFreezeLevel: 2\n---\n" + xhr.responseText + "\n<\/script>";
+          let myElement = document.getElementById("maprender");
+          myElement.innerHTML = content;
+        }
+      };
+      xhr.send();
+    </script>
+  </body>
+</html>

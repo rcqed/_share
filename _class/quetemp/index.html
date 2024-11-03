@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张老师知识星球提问模板</title>
+
+</head>
+<body>
+
+    <label for="textArea">提问模板：</label>
+    <textarea id="textArea" rows="4" cols="50"></textarea>
+	<button onclick="copyToClipboard()">一键复制</button>
+
+    <br><br>
+
+	<label>选择版本：</label>
+	<button onclick="toggleVersion()" style="margin-right: 10px;">切换</button>
+	<span id="versionText">搜索版</span>
+	
+    <br><br>
+
+	<div id="mobileVersion">
+		<label>标签：</label>
+		<button onclick="updateTextArea('一级真题')">一级真题</button>
+		<button onclick="updateTextArea('二级真题')">二级真题</button>
+		<button onclick="updateTextArea('模拟题')">模拟题</button>
+		<button onclick="updateTextArea('规范理解')">规范理解</button>
+		<button onclick="updateTextArea('混凝土')">混凝土</button>
+		<button onclick="updateTextArea('钢结构')">钢结构</button>
+		<button onclick="updateTextArea('砌体和木')">砌体和木</button>
+		<button onclick="updateTextArea('地基基础')">地基基础</button>
+		<button onclick="updateTextArea('高层')">高层</button>
+		<button onclick="updateTextArea('桥梁')">桥梁</button>
+		<button onclick="updateTextArea('学员分享')">学员分享</button>
+		<button onclick="updateTextArea('岩土真题')">岩土真题</button>
+	</div>
+
+	<div id="webVersion" style="display: none;">
+		<label>标签：</label>
+		<button onclick="updateTextArea('#一级真题')">一级真题</button>
+		<button onclick="updateTextArea('#二级真题')">二级真题</button>
+		<button onclick="updateTextArea('#模拟题')">模拟题</button>
+		<button onclick="updateTextArea('#规范理解')">规范理解</button>
+		<button onclick="updateTextArea('#混凝土')">混凝土</button>
+		<button onclick="updateTextArea('#钢结构')">钢结构</button>
+		<button onclick="updateTextArea('#砌体和木')">砌体和木</button>
+		<button onclick="updateTextArea('#地基基础')">地基基础</button>
+		<button onclick="updateTextArea('#高层')">高层</button>
+		<button onclick="updateTextArea('#桥梁')">桥梁</button>
+		<button onclick="updateTextArea('#学员分享')">学员分享</button>
+		<button onclick="updateTextArea('#岩土真题')">岩土真题</button>
+	</div>
+
+    <br><br>
+
+    <label>年份(03-08年套题不用选)：</label>
+    <div class="yearButtons">
+        <button onclick="updateTextArea2('09')">2009</button>
+        <button onclick="updateTextArea2('10')">2010</button>
+        <button onclick="updateTextArea2('11')">2011</button>
+        <button onclick="updateTextArea2('12')">2012</button>
+        <button onclick="updateTextArea2('13')">2013</button>
+        <button onclick="updateTextArea2('14')">2014</button>
+        <button onclick="updateTextArea2('15')">2015</button>
+        <button onclick="updateTextArea2('16')">2016</button>
+        <button onclick="updateTextArea2('17')">2017</button>
+        <button onclick="updateTextArea2('18')">2018</button>
+        <button onclick="updateTextArea2('19')">2019</button>
+        <button onclick="updateTextArea2('20')">2020</button>
+        <button onclick="updateTextArea2('21')">2021</button>
+        <button onclick="updateTextArea2('22')">2022</button>
+        <button onclick="updateTextArea2('22补')">2022补考</button>
+        <button onclick="updateTextArea2('23')">2023</button>
+        <input type="text" id="customYear" placeholder="自定义年份（后两位）">
+        <button onclick="updateCustomYear()">输入</button>
+    </div>
+
+    <br><br>
+
+    <label>上午/下午(真题不用选)：</label>
+        <button onclick="updateTextArea2('A')">模拟题(上午)</button>
+        <button onclick="updateTextArea2('B')">模拟题(下午)</button>
+        <button onclick="updateTextArea2('C')">岩土真题(上午)</button>
+        <button onclick="updateTextArea2('D')">岩土真题(下午)</button>
+		
+    <br><br>
+    <div class="yearButtons2">
+    <label>题号：</label>
+        <input type="text" id="customnum" placeholder="自定义题号">
+        <button onclick="updateCustomYear2()">输入</button>
+		<div id="button-container"></div>
+
+	<script>
+		function copyToClipboard() {
+			var textArea = document.getElementById('textArea');
+			textArea.select();
+			document.execCommand('copy');
+		}
+	</script>
+
+	<script>
+		function toggleVersion() {
+			var mobileVersion = document.getElementById('mobileVersion');
+			var webVersion = document.getElementById('webVersion');
+			var versionText = document.getElementById('versionText');
+
+			if (getComputedStyle(mobileVersion).display !== 'none') {
+				mobileVersion.style.display = 'none';
+				webVersion.style.display = 'block';
+				versionText.innerText = '发布版';
+			} else {
+				mobileVersion.style.display = 'block';
+				webVersion.style.display = 'none';
+				versionText.innerText = '搜索版';
+			}
+		}
+
+		function updateTextArea(tag) {
+		}
+	</script>
+
+	<script>
+	  document.addEventListener("DOMContentLoaded", function() {
+		const buttonContainer = document.getElementById("button-container");
+
+		for (let i = 1; i <= 80; i++) {
+		  const button = document.createElement("button");
+		  button.textContent = i.toString().padStart(2, '0');
+		  button.addEventListener("click", function() {
+			updateTextArea(button.textContent);
+		  });
+		  buttonContainer.appendChild(button);
+		}
+	  });
+	</script>
+
+    <script>
+        function updateTextArea(value) {
+            var textArea = document.getElementById('textArea');
+            textArea.value += value + ' ';
+        }
+		
+        function updateTextArea2(value) {
+            var textArea = document.getElementById('textArea');
+            textArea.value += value;
+        }
+
+        function updateCustomYear() {
+            var customYearInput = document.getElementById('customYear');
+            var customYearValue = customYearInput.value.trim();
+
+            if (customYearValue !== '') {
+                var textArea = document.getElementById('textArea');
+                textArea.value += customYearValue;
+            }
+        }
+		
+        function updateCustomYear2() {
+            var customYearInput = document.getElementById('customnum');
+            var customYearValue = customYearInput.value.trim();
+
+            if (customYearValue !== '') {
+                var textArea = document.getElementById('textArea');
+                textArea.value += customYearValue;
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show Tasks</title>
+</head>
+<body>
+    <table border="1" id="table"></table>
+
+    <script>
+        // Function to prompt for WebDAV credentials
+        function promptForWebDAVCredentials() {
+            const username = window.prompt('Enter WebDAV username:');
+            const password = window.prompt('Enter WebDAV password:');
+            return { username, password };
+        }
+
+        // Function to fetch data from a WebDAV folder
+        function fetchWebDAVFolderData(url, credentials) {
+            return fetch(url, {
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization': 'Basic ' + btoa(`${credentials.username}:${credentials.password}`)
+                })
+            });
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const folder = urlParams.get('folder') || '';
+        const targetDir = `${folder}/`;
+
+        if (!folder) {
+            document.getElementById('table').innerHTML = 'Folder not found!';
+        } else {
+            const isWebDAV = folder.includes('dav');
+
+            if (isWebDAV) {
+                const credentials = promptForWebDAVCredentials();
+
+                if (credentials.username && credentials.password) {
+					const webDAVFolderURL = `${targetDir}filename.txt`;
+                    fetchWebDAVFolderData(webDAVFolderURL, credentials)
+                        .then(response => response.text())
+                        .then(data => processData(data))
+                        .catch(error => console.error('Error fetching data:', error));
+                } else {
+                    document.getElementById('table').innerHTML = 'WebDAV credentials not provided!';
+                }
+            } else {
+                fetch(`${targetDir}filename.txt`)
+                    .then(response => response.text())
+                    .then(data => processData(data))
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+        }
+
+        function processData(data) {
+            const excludedFiles = ["main.bat", "participants.txt", "Project-File-Renamer.py","filename.txt"];
+            const files = data.split('\n');
+
+            const part1s = [];
+            const part2s = [];
+            const dataMap = {};
+
+            files.forEach(file => {
+                if (!excludedFiles.includes(file)) {
+                    const parts = file.split('__');
+                    if (parts.length === 3) {
+                        const [part1, part2, part3] = parts;
+
+                        if (!part1s.includes(part1)) {
+                            part1s.push(part1);
+                        }
+
+                        if (!part2s.includes(part2)) {
+                            part2s.push(part2);
+                        }
+
+                        if (!dataMap[part1]) {
+                            dataMap[part1] = {};
+                        }
+                        if (!dataMap[part1][part2]) {
+                            dataMap[part1][part2] = [];
+                        }
+                        dataMap[part1][part2].push(part3);
+                    }
+                }
+            });
+
+            const table = document.getElementById('table');
+            const headerRow = table.insertRow();
+            headerRow.insertCell();
+
+            part2s.forEach(part2 => {
+                const cell = headerRow.insertCell();
+                cell.textContent = part2;
+            });
+
+            part1s.forEach(part1 => {
+                const row = table.insertRow();
+                const cell = row.insertCell();
+                cell.textContent = part1;
+
+                part2s.forEach(part2 => {
+                    const cell = row.insertCell();
+
+                    if (dataMap[part1] && dataMap[part1][part2]) {
+                        dataMap[part1][part2].forEach(part3 => {
+                            const link = document.createElement('a');
+							const sanitizedFolder = folder.replace('https://get.zongj.cn/dav/_source/', '');
+							link.href = `https://www.00083.cn/_class/goto/#/${sanitizedFolder}/${part1}__${part2}__${part3}`;
+                            link.textContent = part3;
+                            cell.appendChild(link);
+                            cell.appendChild(document.createElement('br'));
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

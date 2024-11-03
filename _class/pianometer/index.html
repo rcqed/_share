@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>钢琴键盘显示器</title>
+    <link rel="stylesheet" href="./_css/style.css">
+    <script src="./_js/p5.min.js"></script>
+    <script src="./_js/tonal.min.js"></script>
+
+    <script src="./_js/webmidi.js"></script>
+    <script src="./_js/globals.js"></script>
+    <script src="./_js/piano-visualizer.js"></script>
+</head>
+
+<body>
+    <div id="main">
+           <div id="controls" class="center">
+            <div>
+                <h3>钢琴键盘显示器</h3>
+                <div style="display: flex; justify-content: space-around;">
+                    <div>
+                        <h5>选择MIDI装置</h5>
+                        <input id="slider" type="range" min="0" max="0" value="0">
+                        <div id="device">Select Input: </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
+                        <div>
+                            <label for="colorpicker">选择颜色</label>
+                            <input type="color" id="colorpicker" value="#ff0090" oninput="changeColor()">
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span style="margin-right: 5px;">彩虹模式</span>
+                            <input type="checkbox" id="rainbow-mode-checkbox" onclick="toggleRainbowMode(this)">
+                            <label for="rainbow-mode-checkbox">
+                                <span class="switch-txt" turnOn="On" turnOff="Off"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            
+            </div>
+        </div>
+
+        <div class="center">
+                     
+            <div id="piano-visualizer">
+                <!-- Our sketch will go here! -->
+            </div>
+            <span style="font-size: 11px;"> 
+            TIME：使用时间 | NOTE COUNT：总弹奏音符数 | NPS：最近一秒钟弹奏音符数（括号为历史最大值） | LEGATO：圆滑指数（最近一秒钟平均来说有几个键被同时按住） <br />
+            CALORIES：消耗热量（估计值，好玩就好）| PEDALS：左右踏板深度显示 <br />
+            （密技：点键盘最左上角的角落，可以储存截图） <br /><br />
+        </span>
+
+
+        </div>
+    
+        
+    </div>  
+</body>
+
+</html>

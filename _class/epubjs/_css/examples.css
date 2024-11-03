@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  background: #fafafa;
+  font-family: "Arial", "Helvetica", "Microsoft YaHei", "SimSun", "PingFang SC", sans-serif;
+  color: #333;
+
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  min-height: 800px;
+}
+
+#viewer.scrolled .epub-container {
+  background: white;
+  box-shadow: 0 0 4px #ccc;
+  margin: 10px;
+  padding: 20px;
+}
+
+#toc {
+  display: block;
+  margin: 10px auto;
+}
+
+.navlink {
+  margin: 14px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #ccc;
+}

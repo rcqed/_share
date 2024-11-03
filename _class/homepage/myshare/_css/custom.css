@@ -1,0 +1,50 @@
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	height: 100vh;
+	font-family: Arial, sans-serif;
+}
+
+#content {
+	position: fixed;
+	margin-top: 10%;
+	margin-left: 16%;
+}
+
+#title {
+	font-size: 50px;
+}
+#my-link {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #FFD700; /* 黄色背景色 */
+	border-radius: 25px; /* 圆角 */
+	text-decoration: none;
+	color: #fff; /* 白色文字颜色 */
+	font-size: 24px;
+	transition: background-color 0.3s ease; /* 平滑的背景颜色过渡效果 */
+	margin: 0 5px;
+}
+
+/* 悬停时改变背景颜色 */
+#my-link:hover {
+	background-color: #ffb700; /* 悬停时的背景颜色 */
+}
+#footer {
+	position: fixed;
+	bottom: 0;
+}
+
+#info {
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+	color: #85cbff; /* 淡蓝色文本颜色 */
+	font-size: 12px; /* 较小的字号 */
+}

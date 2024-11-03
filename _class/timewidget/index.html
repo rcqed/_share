@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Time</title>
+	<link rel="stylesheet" href="./_css/style.css">
+	<script src="./_js/NoSleep.min.js"></script>
+	<script src="./_js/darkmode-js.min.js"></script>
+	<script src="./_js/time.js"></script>
+	<script src="./_js/timer.js"></script>
+</head>
+<body>
+    <p><span id="time"></span></p>
+    <p><span id="date"></span>  <span id="dayOfWeek"></span></p>
+    <p><span id="timer"></span></p>
+    <audio id="bell" src="./_css/bell.mp3"></audio>
+    <button id="startStopButton" onclick="startStopTimer()"></button>
+    <button onclick="copyCurrentTime()" id="copyCurrentTime"></button>
+	<button id="dark-mode-toggle"></button>
+	<script>
+	  document.addEventListener("DOMContentLoaded", function () {
+		const darkmode = new Darkmode();
+		const toggleButton = document.getElementById("dark-mode-toggle");
+
+		toggleButton.addEventListener("click", function () {
+		  darkmode.toggle();
+		});
+	  });
+	</script>
+    <script>
+        var noSleep = new NoSleep();
+		document.addEventListener('click', function enableNoSleep() {
+		  document.removeEventListener('click', enableNoSleep, false);
+		  noSleep.enable();
+		}, false);
+    </script>
+</body>
+</html>

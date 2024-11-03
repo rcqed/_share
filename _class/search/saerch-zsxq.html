@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Go to ZSXQ</title>
+</head>
+<body>
+    <script>
+        window.onload = function() {
+            // 获取 URL 中的参数
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            // 获取 "i" 参数的值
+            const keyword = urlParams.get('i');
+
+            // 如果存在关键词，则进行跳转
+            if (keyword) {
+                const redirectURL = `https://wx.zsxq.com/dweb2/index/search/${keyword}?groupId=28518511451521`;
+                window.location.href = redirectURL;
+            } else {
+                // 如果没有关键词，则给出提示或执行其他操作
+                console.log('未提供关键词');
+            }
+        };
+    </script>
+</body>
+</html>
+
