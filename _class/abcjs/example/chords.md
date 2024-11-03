@@ -1,5 +1,0 @@
-X:1
-T:Chords
-M:2/4
-K:C
-[CEGc] [C2G2] [CE][DF] | [D2F2][EG][FA] [A4d4]|]
