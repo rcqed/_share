@@ -65,3 +65,5 @@
 西撒哈拉,https://player.bilibili.com/player.html?bvid=BV1Pf42197m2
 摩洛哥,https://player.bilibili.com/player.html?bvid=BV1J4421U7qB
 毛里塔尼亚,https://player.bilibili.com/player.html?bvid=BV1fm421g7Nv
+马里,https://player.bilibili.com/player.html?bvid=BV1nutyeXE1F
+布基纳法索,https://player.bilibili.com/player.html?bvid=BV1iQxxesEfQ
